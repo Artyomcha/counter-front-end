@@ -4,6 +4,10 @@ import { useMainContract } from "./hooks/useMainContract";
 import { useTonConnect } from "./hooks/useTonConnect";
 import { fromNano } from "ton-core";
 
+import WebApp from '@twa-dev/sdk'
+
+WebApp.showAlert('Hey there!');
+
 function App() {
   const {
     contract_address,
@@ -16,6 +20,10 @@ function App() {
 
 const {connected } = useTonConnect();
 
+const showAlert = () => {
+  WebApp.showAlert("Hey there!");
+};
+
   return (
     <div>
       <div>
@@ -23,6 +31,7 @@ const {connected } = useTonConnect();
       </div>
       <div>
         <div className='Card'>
+          <b>{WebApp.platform}</b>
           <b>Our contract Address</b>
           <div className='Hint'>{contract_address?.slice(0, 30) + "..."}</div>
           <b>Our contract Balance</b>
@@ -37,6 +46,17 @@ const {connected } = useTonConnect();
           <b>Counter Value</b>
           <div>{counter_value ?? "Loading..."}</div>
         </div>
+
+        {connected && (
+        <a onClick={ () => {
+          showAlert();
+        }}
+        >
+          Show Alert
+        </a>
+      )}
+
+      <br/>
 
       {connected && (
         <a onClick={ () => {
